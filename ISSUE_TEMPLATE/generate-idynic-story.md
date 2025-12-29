@@ -3,7 +3,6 @@ name: Generate Idynic Story
 about: Generate a professional story from codebase contributions for your idynic profile
 title: "[STORY] Generate story from [REPO NAME] contributions"
 labels: story-generation
-assignees: ''
 ---
 
 ## Generate Idynic Story from Codebase
