@@ -1,0 +1,120 @@
+# Atriumn Repo Health Standard
+# Used by RAM's repo-health system to detect drift and auto-fix issues
+version: "1.0"
+
+# === Language/Framework Detection ===
+# Auto-detect based on manifest files
+# Per-repo overrides available in `overrides` section
+
+languages:
+  python:
+    detect: [pyproject.toml, setup.py, requirements.txt]
+    env_patterns: ["os.getenv", "os.environ", "settings."]
+    test_locations: [tests/, test/, "*_test.py", "test_*.py"]
+    api_frameworks:
+      fastapi: ["@app.get", "@app.post", "@router."]
+      flask: ["@app.route"]
+
+  javascript:
+    detect: [package.json]
+    env_patterns: ["process.env."]
+    test_locations: [tests/, __tests__/, "*.test.js", "*.test.ts", "*.spec.js", "*.spec.ts"]
+    api_frameworks:
+      express: ["app.get", "app.post", "router.get"]
+      nextjs: ["/app/api/", "/pages/api/"]
+
+  go:
+    detect: [go.mod]
+    env_patterns: ["os.Getenv"]
+    test_locations: ["*_test.go"]
+    api_frameworks:
+      gin: ["gin.Context"]
+      chi: ["chi.Router"]
+
+  rust:
+    detect: [Cargo.toml]
+    env_patterns: ["std::env::var", "env::var"]
+    test_locations: [tests/, "#[test]"]
+
+# === Universal Standards ===
+docs:
+  required:
+    - path: README.md
+      sections: [purpose, quick_start, configuration]
+    - path: CLAUDE.md
+      sections: [quick_reference, key_files]
+  recommended:
+    - path: docs/architecture.md
+      sections: [mermaid_diagram, components, data_flow]
+
+env_vars:
+  require_env_example: true
+  sync_to_readme: true
+
+api:
+  sync_to_docs: true
+
+testing:
+  required: [unit]
+  recommended: [integration, performance]
+
+github:
+  labels:
+    required:
+      - bug
+      - enhancement
+      - documentation
+      - good first issue
+    recommended:
+      - blocked
+      - priority:high
+      - priority:low
+  issue_templates:
+    required:
+      - bug_report.md
+      - feature_request.md
+      - task.md
+  stale:
+    issues_days: 30
+    prs_days: 14
+    branches_days: 30
+
+plans:
+  locations:
+    - docs/plans/
+    - docs/tasks/
+    - plans/
+    - tasks/
+  exclude: [archived/]
+  stale_days: 14
+
+# === Auto-Fix Configuration ===
+auto_fix:
+  level: moderate  # conservative, moderate, aggressive
+
+  # Safe auto-fixes (no PR needed)
+  safe:
+    - create_missing_labels
+    - add_stale_label
+    - post_stale_reminder
+    - delete_abandoned_branches
+
+  # Auto-merge simple PRs
+  auto_merge:
+    - env_example_sync
+    - label_sync
+
+  # Requires human review
+  pr_required:
+    - new_docs
+    - architecture_updates
+    - issue_templates
+
+# === Per-Repo Overrides ===
+overrides: {}
+  # Example:
+  # trelliss:
+  #   testing:
+  #     test_locations: [src/__tests__/]
+  #   api:
+  #     skip: true
