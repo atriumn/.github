@@ -40,7 +40,7 @@ languages:
 docs:
   required:
     - path: README.md
-      sections: [purpose, quick_start, configuration]
+      sections: [value_proposition, quick_start, configuration]
     - path: CLAUDE.md
       sections: [quick_reference, key_files]
   recommended:
