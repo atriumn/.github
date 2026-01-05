@@ -57,6 +57,7 @@ api:
 testing:
   required: [unit]
   recommended: [integration, performance]
+  coverage_threshold: 70  # health target (CI threshold can be lower)
 
 github:
   labels:
@@ -111,7 +112,10 @@ auto_fix:
     - issue_templates
 
 # === Per-Repo Overrides ===
-overrides: {}
+overrides:
+  ram:
+    testing:
+      coverage_threshold: 50  # catching up from 27%
   # Example:
   # trelliss:
   #   testing:
