@@ -76,7 +76,8 @@ github:
       - feature_request.md
       - task.md
   stale:
-    issues_days: 30
+    issues_days: 14      # add stale label after 14 days
+    close_days: 21       # auto-close after 21 days total
     prs_days: 14
     branches_days: 30
 
