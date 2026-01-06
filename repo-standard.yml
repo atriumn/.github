@@ -90,8 +90,9 @@ plans:
     - docs/tasks/
     - plans/
     - tasks/
-  exclude: [archived/]
+  exclude: [archived/, archive/]
   stale_days: 14
+  require_issue_ref: true  # Plan docs must reference a GitHub issue (#123 or URL)
 
 # === Auto-Fix Configuration ===
 auto_fix:
