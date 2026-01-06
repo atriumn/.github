@@ -70,11 +70,14 @@ github:
       - blocked
       - priority:high
       - priority:low
-  issue_templates:
-    required:
-      - bug_report.md
-      - feature_request.md
-      - task.md
+  branch_protection:
+    required: true
+    settings:
+      require_pr: true              # No direct pushes to main
+      require_status_checks: true   # CI must pass
+      require_linear_history: false # Optional - clean git history
+  cicd:
+    required: true                  # Must have GitHub Actions workflows
   stale:
     issues_days: 14      # add stale label after 14 days
     close_days: 21       # auto-close after 21 days total
@@ -110,7 +113,6 @@ auto_fix:
   pr_required:
     - new_docs
     - architecture_updates
-    - issue_templates
 
 # === Per-Repo Overrides ===
 overrides:
